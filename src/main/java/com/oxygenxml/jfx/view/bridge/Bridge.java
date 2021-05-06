@@ -132,7 +132,7 @@ public class Bridge {
   @SuppressWarnings("restriction")
   protected void addHook(WSEditorPage currentPage) {
     if (currentPage instanceof WSAuthorEditorPage && 
-        hookInstalled.containsKey(currentPage.getParentEditor().getEditorLocation().toExternalForm())) {
+        !hookInstalled.containsKey(currentPage.getParentEditor().getEditorLocation().toExternalForm())) {
       hookInstalled.put(currentPage.getParentEditor().getEditorLocation().toExternalForm(), true);
       WSAuthorEditorPage authorPage = (WSAuthorEditorPage) currentPage;
       AuthorCaretListener caretListener = caretEvent -> {
