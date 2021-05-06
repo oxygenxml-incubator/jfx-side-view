@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+    <head>
+        <title>A sample for interacting with the Oxygen Workspace.</title>
+
+        <script type="text/javascript" src="interaction.js"></script>
+
+    </head>
+    <body>
+        <div>
+            <p>This view demonstrates interaction between the JavaScript loaded inside the view and Oxygen.</p>
+            
+            <button onclick="addPara()">Add a new paragraph</button>
+        </div>
+        <div>
+            <p>Have a look at the HTML rendered: <button
+                    onclick="openHTMLInOxygen()">Open HTML file</button></p>
+        </div>
+        <hr/>
+        <div>
+            <p>The plugin can use its Java-based API to add hooks on the workbench and call JavaScript function.Currently added hooks:</p>
+            <ol>
+                <li>When an editor is selected the JavaScript <i>editorSelected()</i> function is called.</li>
+            </ol>
+            <p class="called.method"></p>
+        </div>
+        <hr/>
+        <div>
+            <p>Events are sent from the Oxygen workbench to the JavaScript. Currently fired events:</p>
+            <ol>
+                <li>When an editor is selected.</li>
+                <li>When the element at caret position changes in author mode.</li>
+            </ol>
+            
+            <p>Last received event:</p>
+            <p> <b class="event"></b></p>
+        </div>
+    </body>
+</html>

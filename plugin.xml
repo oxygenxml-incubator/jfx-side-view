@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plugin PUBLIC "-//Oxygen Plugin" "../plugin.dtd">
+<plugin
+  id="com.oxygenxml.jfx.view"
+ name="JFX Side View"
+ description="A side view that uses a JavaFX browser"
+ version="${project.version}"
+ vendor="oXygen XML"
+ class="com.oxygenxml.jfx.view.WorkspaceAccessPlugin"
+ classLoaderType="preferReferencedResources">
+ 
+ <runtime>
+	<librariesFolder name="lib" />
+    <library name="target/classes" />
+	<librariesFolder name="target/lib" />
+ </runtime>
+  
+  <property name="jfx.developer.mode" value="true"/>
+ 
+ <extension type="WorkspaceAccess" 
+   class="com.oxygenxml.jfx.view.JFXViewPluginExtension"/>
+ 
+  <!--The sample view which will present messages from the sample plugin.-->
+  <view id="JFXSideView" initialSide="WEST" initialRow="0"/>
+</plugin>
