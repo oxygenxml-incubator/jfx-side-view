@@ -5,6 +5,7 @@ import java.net.URL;
 import java.util.HashMap;
 import java.util.Map;
 
+import javax.swing.SwingUtilities;
 import javax.swing.text.BadLocationException;
 
 import org.apache.log4j.Logger;
@@ -65,28 +66,30 @@ public class Bridge {
     pluginWorkspace.addEditorChangeListener(new WSEditorChangeListener() {
       @Override
       public void editorSelected(URL editorLocation) {
-        // 1. Invoke a JavaScript function.
-        javafx.application.Platform.runLater(() -> engine.executeScript("editorSelected()"));
-        
-        // 2. Send an event.
-        String fileName = pluginWorkspace.getUtilAccess().getFileName(editorLocation.toString());
-        //  Send a message as well.
-        javafx.application.Platform.runLater(() -> {
-          JSObject event = (JSObject) engine.executeScript("new CustomEvent('message', { detail: {selectedFileName:'" + fileName
-              + "'} });");
-          JSObject window2 = (JSObject) engine.executeScript("window");
-          window2.call("dispatchEvent", event);
-        });
-        
-        // 3. Add a hook on the author page to fire other events.
-        WSEditor editorAccess = pluginWorkspace.getEditorAccess(editorLocation, PluginWorkspace.MAIN_EDITING_AREA);
-        addHook(editorAccess.getCurrentPage());
-        editorAccess.addEditorListener(new WSEditorListener() {
-          @Override
-          public void editorPageChanged() {
-            addHook(editorAccess.getCurrentPage());
-          }
-        });
+        if (editorLocation != null) {
+          // 1. Invoke a JavaScript function.
+          javafx.application.Platform.runLater(() -> engine.executeScript("editorSelected()"));
+
+          // 2. Send an event.
+          String fileName = pluginWorkspace.getUtilAccess().getFileName(editorLocation.toString());
+          //  Send a message as well.
+          javafx.application.Platform.runLater(() -> {
+            JSObject event = (JSObject) engine.executeScript("new CustomEvent('message', { detail: {selectedFileName:'" + fileName
+                + "'} });");
+            JSObject window2 = (JSObject) engine.executeScript("window");
+            window2.call("dispatchEvent", event);
+          });
+
+          // 3. Add a hook on the author page to fire other events.
+          WSEditor editorAccess = pluginWorkspace.getEditorAccess(editorLocation, PluginWorkspace.MAIN_EDITING_AREA);
+          addHook(editorAccess.getCurrentPage());
+          editorAccess.addEditorListener(new WSEditorListener() {
+            @Override
+            public void editorPageChanged() {
+              addHook(editorAccess.getCurrentPage());
+            }
+          });
+        }
       }
       
       @Override
@@ -166,7 +169,8 @@ public class Bridge {
    * @throws MalformedURLException Unable to build a URL.
    */
   public void open(String url) throws MalformedURLException {
-    pluginWorkspace.open(new URL(url));
+    URL url2 = new URL(url);
+    SwingUtilities.invokeLater(() -> pluginWorkspace.open(url2));
   }
   
   /**
