@@ -11,8 +11,10 @@
  * Initializes the form control with the values from the document.
  */
 function editorSelected () {
-    var editorLocation = pluginWorkspace.getCurrentEditorAccess(0).getEditorLocation();
-     document.getElementsByClassName("called.method")[0].innerHTML = "Selected editor: <b>" + editorLocation + "</b>";    
+	if (pluginWorkspace.getCurrentEditorAccess(0) != null) {
+      var editorLocation = pluginWorkspace.getCurrentEditorAccess(0).getEditorLocation();
+      document.getElementsByClassName("called.method")[0].innerHTML = "Selected editor: <b>" + editorLocation + "</b>";
+	}
 }
 
 /**
