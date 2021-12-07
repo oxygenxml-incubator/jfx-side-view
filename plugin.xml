@@ -5,7 +5,7 @@
  name="JFX Side View"
  description="A side view that uses a JavaFX browser"
  version="${project.version}"
- vendor="oXygen XML"
+ vendor="Syncro Soft"
  class="com.oxygenxml.jfx.view.WorkspaceAccessPlugin"
  classLoaderType="preferReferencedResources">
  
